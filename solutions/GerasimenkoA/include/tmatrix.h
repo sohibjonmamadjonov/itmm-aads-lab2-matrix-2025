@@ -60,7 +60,9 @@ public:
 
   ~TDynamicVector()
   {
+      // проверка на нольптр
       delete[] pMem;
+      // присвоить 0 
   }
 
   TDynamicVector& operator=(const TDynamicVector& v)
@@ -68,12 +70,12 @@ public:
       if (this == &v) return *this;
 
       if (v.sz == 0) {
-          delete[] pMem;
+          delete[] pMem; // если уже пусто??
           pMem = nullptr;
           sz = 0;
           return *this;
       }
-
+      // Если память равна?
       T* newMem = new T[v.sz];
       for (size_t i = 0; i < v.sz; i++) {
           newMem[i] = v.pMem[i];
@@ -89,7 +91,7 @@ public:
   TDynamicVector& operator=(TDynamicVector&& v) noexcept
   {
       if (this == &v) return *this;
-
+      //?
       delete[] pMem;
 
       pMem = v.pMem;
@@ -142,26 +144,29 @@ public:
   // скалярные операции
   TDynamicVector operator+(T val)
   {
+      TDynamicVector<T> result(sz);
       for (size_t i = 0; i < sz; ++i) {
-          pMem[i] += val;
+          result[i] = pMem[i] + val;
       }
-      return *this;
+      return result;
   }
 
   TDynamicVector operator-(T val)
   {
+      TDynamicVector<T> result(sz);
       for (size_t i = 0; i < sz; ++i) {
-          pMem[i] -= val;
+          result[i] = pMem[i] - val;
       }
-      return *this;
+      return result;
   }
 
   TDynamicVector operator*(T val)
   {
+      TDynamicVector<T> result(sz);
       for (size_t i = 0; i < sz; ++i) {
-          pMem[i] *= val;
+          result[i] = pMem[i] * val;
       }
-      return *this;
+      return result;
   }
 
   // векторные операции
@@ -170,10 +175,11 @@ public:
       if (sz != v.sz) throw out_of_range("Vectors are of different sizes");
       if (sz == 0) return TDynamicVector(*this);
 
-      for (size_t i = 0; i < sz; i++) {
-          pMem[i] += v.pMem[i];
+      TDynamicVector<T> result(sz);
+      for (size_t i = 0; i < sz; ++i) {
+          result[i] = pMem[i] + v.pMem[i];
       }
-      return *this;
+      return result;
   }
 
   TDynamicVector operator-(const TDynamicVector& v)
@@ -181,15 +187,16 @@ public:
       if (sz != v.sz) throw out_of_range("Vectors are of different sizes");
       if (sz == 0) return TDynamicVector(*this);
 
-      for (size_t i = 0; i < sz; i++) {
-          pMem[i] -= v.pMem[i];
+      TDynamicVector<T> result(sz);
+      for (size_t i = 0; i < sz; ++i) {
+          result[i] = pMem[i] - v.pMem[i];
       }
-      return *this;
+      return result;
   }
 
   T operator*(const TDynamicVector& v) noexcept(noexcept(T()))
   {
-      //?)
+      // скалярное умножение двух векторов
   }
 
   friend void swap(TDynamicVector& lhs, TDynamicVector& rhs) noexcept
@@ -202,7 +209,7 @@ public:
   friend istream& operator>>(istream& istr, TDynamicVector& v)
   {
     for (size_t i = 0; i < v.sz; i++)
-      istr >> v.pMem[i]; // требуется оператор>> для типа T. От меня что требуется?)
+      istr >> v.pMem[i]; 
     return istr;
   }
 
@@ -210,7 +217,7 @@ public:
   {
       for (size_t i = 0; i < v.sz; ++i) {
           ostr << v.pMem[i];
-          if (i + 1 < v.sz) ostr << ' '; // требуется оператор<< для типа T. От меня что требуется?)
+          if (i + 1 < v.sz) ostr << ' '; 
       }                                     
     return ostr;
   }
