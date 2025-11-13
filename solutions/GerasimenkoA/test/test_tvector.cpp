@@ -47,7 +47,6 @@ TEST(TDynamicVector, copied_vector_has_its_own_memory)
 	ASSERT_EQ(1, a[0]);
 	ASSERT_EQ(100, b[0]);
 	ASSERT_FALSE(a == b);
-
 }
 
 TEST(TDynamicVector, can_get_size)
