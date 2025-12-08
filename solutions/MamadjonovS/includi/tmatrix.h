@@ -385,28 +385,7 @@ public:
         return ostr;
     }
 
-    // Транспонирование матрицы
-    TDynamicMatrix transpose() const
-    {
-        TDynamicMatrix result(sz);
-        for (size_t i = 0; i < sz; ++i) {
-            for (size_t j = 0; j < sz; ++j) {
-                result[j][i] = pMem[i][j];
-            }
-        }
-        return result;
-    }
-
-    // Проверка на симметричность
-    bool isSymmetric() const
-    {
-        for (size_t i = 0; i < sz; ++i) {
-            for (size_t j = i + 1; j < sz; ++j) {
-                if (pMem[i][j] != pMem[j][i]) return false;
-            }
-        }
-        return true;
-    }
+     
 };
 
 #endif
