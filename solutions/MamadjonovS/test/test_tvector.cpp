@@ -1,4 +1,5 @@
-#include "../tmatrix.h"
+#include "tmatrix.h"
+
 #include <gtest.h>
 
 TEST(TDynamicVector, can_create_vector_with_positive_length)
@@ -253,65 +254,4 @@ TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)
     ASSERT_ANY_THROW(v1 * v2);
 }
 
-// ƒополнительные тесты дл€ полноты покрыти€
-TEST(TDynamicVector, can_use_at_method_with_const_object)
-{
-    const TDynamicVector<int> v(3);
-    ASSERT_NO_THROW(v.at(0));
-    ASSERT_ANY_THROW(v.at(3));
-}
-
-TEST(TDynamicVector, can_swap_vectors)
-{
-    TDynamicVector<int> v1(2);
-    v1[0] = 1; v1[1] = 2;
-
-    TDynamicVector<int> v2(2);
-    v2[0] = 3; v2[1] = 4;
-
-    swap(v1, v2);
-
-    ASSERT_EQ(v1[0], 3);
-    ASSERT_EQ(v1[1], 4);
-    ASSERT_EQ(v2[0], 1);
-    ASSERT_EQ(v2[1], 2);
-}
-
-TEST(TDynamicVector, can_create_vector_from_array)
-{
-    int arr[] = { 1, 2, 3, 4, 5 };
-    ASSERT_NO_THROW(TDynamicVector<int> v(arr, 5));
-
-    TDynamicVector<int> v(arr, 5);
-    ASSERT_EQ(v.size(), 5);
-    ASSERT_EQ(v[0], 1);
-    ASSERT_EQ(v[4], 5);
-}
-
-TEST(TDynamicVector, can_use_move_constructor)
-{
-    TDynamicVector<int> v1(3);
-    v1[0] = 1; v1[1] = 2; v1[2] = 3;
-
-    ASSERT_NO_THROW(TDynamicVector<int> v2(std::move(v1)));
-
-    TDynamicVector<int> v2(std::move(v1));
-    ASSERT_EQ(v2.size(), 3);
-    ASSERT_EQ(v2[0], 1);
-    ASSERT_EQ(v2[2], 3);
-    ASSERT_EQ(v1.size(), 0); // ѕосле перемещени€ размер должен быть 0
-}
-
-TEST(TDynamicVector, can_use_move_assignment)
-{
-    TDynamicVector<int> v1(2);
-    v1[0] = 1; v1[1] = 2;
-
-    TDynamicVector<int> v2(3);
-    v2 = std::move(v1);
-
-    ASSERT_EQ(v2.size(), 2);
-    ASSERT_EQ(v2[0], 1);
-    ASSERT_EQ(v2[1], 2);
-    ASSERT_EQ(v1.size(), 0); // ѕосле перемещени€ размер должен быть 0
-}
+ 

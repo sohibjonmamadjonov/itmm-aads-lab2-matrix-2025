@@ -251,22 +251,6 @@ public:
             pMem[i] = TDynamicVector<T>(sz);
     }
 
-    TDynamicMatrix(const TDynamicMatrix& m) : TDynamicVector<TDynamicVector<T>>(m) {}
-
-    TDynamicMatrix(TDynamicMatrix&& m) noexcept : TDynamicVector<TDynamicVector<T>>(move(m)) {}
-
-    TDynamicMatrix& operator=(const TDynamicMatrix& m)
-    {
-        TDynamicVector<TDynamicVector<T>>::operator=(m);
-        return *this;
-    }
-
-    TDynamicMatrix& operator=(TDynamicMatrix&& m) noexcept
-    {
-        TDynamicVector<TDynamicVector<T>>::operator=(move(m));
-        return *this;
-    }
-
     size_t size() const noexcept { return sz; }
 
     using TDynamicVector<TDynamicVector<T>>::operator[];
@@ -281,12 +265,7 @@ public:
         }
         return true;
     }
-
-    bool operator!=(const TDynamicMatrix& m) const noexcept
-    {
-        return !(*this == m);
-    }
-
+ 
     // матрично-скал€рные операции
     TDynamicMatrix operator*(const T& val)
     {

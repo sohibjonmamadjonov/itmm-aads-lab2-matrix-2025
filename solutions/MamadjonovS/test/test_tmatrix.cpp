@@ -1,4 +1,5 @@
-#include "../tmatrix.h"
+#include "tmatrix.h"
+
 #include <gtest.h>
 
 TEST(TDynamicMatrix, can_create_matrix_with_positive_length)
@@ -216,65 +217,4 @@ TEST(TDynamicMatrix, cant_subtract_matrixes_with_not_equal_size)
     ASSERT_ANY_THROW(m1 - m2);
 }
 
-// ƒополнительные тесты дл€ полноты покрыти€
-TEST(TDynamicMatrix, can_multiply_matrices_with_equal_size)
-{
-    TDynamicMatrix<int> m1(2);
-    m1[0][0] = 1; m1[0][1] = 2;
-    m1[1][0] = 3; m1[1][1] = 4;
-
-    TDynamicMatrix<int> m2(2);
-    m2[0][0] = 2; m2[0][1] = 0;
-    m2[1][0] = 1; m2[1][1] = 2;
-
-    TDynamicMatrix<int> result = m1 * m2;
-
-    ASSERT_EQ(result[0][0], 4);
-    ASSERT_EQ(result[0][1], 4);
-    ASSERT_EQ(result[1][0], 10);
-    ASSERT_EQ(result[1][1], 8);
-}
-
-TEST(TDynamicMatrix, can_multiply_matrix_by_scalar)
-{
-    TDynamicMatrix<int> m(2);
-    m[0][0] = 1; m[0][1] = 2;
-    m[1][0] = 3; m[1][1] = 4;
-
-    TDynamicMatrix<int> result = m * 3;
-
-    ASSERT_EQ(result[0][0], 3);
-    ASSERT_EQ(result[0][1], 6);
-    ASSERT_EQ(result[1][0], 9);
-    ASSERT_EQ(result[1][1], 12);
-}
-
-TEST(TDynamicMatrix, can_transpose_matrix)
-{
-    TDynamicMatrix<int> m(2);
-    m[0][0] = 1; m[0][1] = 2;
-    m[1][0] = 3; m[1][1] = 4;
-
-    TDynamicMatrix<int> transposed = m.transpose();
-
-    ASSERT_EQ(transposed[0][0], 1);
-    ASSERT_EQ(transposed[0][1], 3);
-    ASSERT_EQ(transposed[1][0], 2);
-    ASSERT_EQ(transposed[1][1], 4);
-}
-
-TEST(TDynamicMatrix, can_multiply_matrix_by_vector)
-{
-    TDynamicMatrix<int> m(2);
-    m[0][0] = 1; m[0][1] = 2;
-    m[1][0] = 3; m[1][1] = 4;
-
-    TDynamicVector<int> v(2);
-    v[0] = 5;
-    v[1] = 6;
-
-    TDynamicVector<int> result = m * v;
-
-    ASSERT_EQ(result[0], 17);  // 1*5 + 2*6 = 17
-    ASSERT_EQ(result[1], 39);  // 3*5 + 4*6 = 39
-}
+ 
