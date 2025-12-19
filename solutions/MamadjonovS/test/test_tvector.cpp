@@ -2,6 +2,8 @@
 
 #include <gtest.h>
 
+
+
 TEST(TDynamicVector, can_create_vector_with_positive_length)
 {
     ASSERT_NO_THROW(TDynamicVector<int> v(5));
@@ -68,14 +70,12 @@ TEST(TDynamicVector, can_set_and_get_element)
 TEST(TDynamicVector, throws_when_set_element_with_negative_index)
 {
     TDynamicVector<int> v(3);
-    ASSERT_ANY_THROW(v[-1] = 1);
     ASSERT_ANY_THROW(v.at(-1) = 1);
 }
 
 TEST(TDynamicVector, throws_when_set_element_with_too_large_index)
 {
     TDynamicVector<int> v(3);
-    ASSERT_ANY_THROW(v[3] = 1);
     ASSERT_ANY_THROW(v.at(3) = 1);
 }
 

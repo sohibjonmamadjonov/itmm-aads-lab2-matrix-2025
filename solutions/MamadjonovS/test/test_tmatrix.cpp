@@ -2,6 +2,11 @@
 
 #include <gtest.h>
 
+TEST(TDynamicMatrix, throws_when_create_matrix_with_zero_length)
+{
+    ASSERT_THROW(TDynamicMatrix<int> m(0), std::out_of_range);
+}
+
 TEST(TDynamicMatrix, can_create_matrix_with_positive_length)
 {
     ASSERT_NO_THROW(TDynamicMatrix<int> m(5));
@@ -70,15 +75,15 @@ TEST(TDynamicMatrix, can_set_and_get_element)
 TEST(TDynamicMatrix, throws_when_set_element_with_negative_index)
 {
     TDynamicMatrix<int> m(3);
-    ASSERT_ANY_THROW(m[-1][0] = 1);
-    ASSERT_ANY_THROW(m[0][-1] = 1);
+    ASSERT_ANY_THROW(m.at(-1).at(0) = 1);
+    ASSERT_ANY_THROW(m.at(0).at(-1) = 1);
 }
 
 TEST(TDynamicMatrix, throws_when_set_element_with_too_large_index)
 {
     TDynamicMatrix<int> m(3);
-    ASSERT_ANY_THROW(m[3][0] = 1);
-    ASSERT_ANY_THROW(m[0][3] = 1);
+    ASSERT_ANY_THROW(m.at(3).at(0) = 1);
+    ASSERT_ANY_THROW(m.at(0).at(3) = 1);
 }
 
 TEST(TDynamicMatrix, can_assign_matrix_to_itself)

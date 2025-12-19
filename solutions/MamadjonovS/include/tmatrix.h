@@ -43,9 +43,8 @@ public:
         if (sz > MAX_VECTOR_SIZE)
             throw out_of_range("Vector size exceeds maximum allowed");
         assert(arr != nullptr && "TDynamicVector ctor requires non-nullptr arg");
-        pMem = new T[sz];
-        std::copy(arr, arr + sz, pMem);
     }
+       
 
     TDynamicVector(const TDynamicVector& v) : sz(v.sz)
     {
@@ -61,7 +60,10 @@ public:
 
     ~TDynamicVector()
     {
-        delete[] pMem;
+        if (pMem != nullptr) {
+            delete[] pMem;
+            pMem = nullptr;
+        }
         sz = 0;
     }
 
@@ -99,15 +101,11 @@ public:
     // индексация
     T& operator[](size_t ind)
     {
-        if (ind >= sz)
-            throw out_of_range("Index out of range in operator[]");
         return pMem[ind];
     }
 
     const T& operator[](size_t ind) const
     {
-        if (ind >= sz)
-            throw out_of_range("Index out of range in operator[] const");
         return pMem[ind];
     }
 
@@ -225,7 +223,7 @@ public:
         ostr << "[ ";
         for (size_t i = 0; i < v.sz; i++) {
             ostr << v.pMem[i];
-            if (i != v.sz - 1) ostr << ", ";
+ 
         }
         ostr << " ]";
         return ostr;
@@ -257,7 +255,7 @@ public:
     using TDynamicVector<TDynamicVector<T>>::at;
 
     // сравнение
-    bool operator==(const TDynamicMatrix& m) const noexcept
+    bool operator==(const TDynamicMatrix& m) const  
     {
         if (sz != m.sz) return false;
         for (size_t i = 0; i < sz; ++i) {
@@ -357,7 +355,6 @@ public:
             ostr << "  [ ";
             for (size_t j = 0; j < m.sz; ++j) {
                 ostr << setw(6) << m.pMem[i][j];
-                if (j != m.sz - 1) ostr << " ";
             }
             ostr << " ]\n";
         }
